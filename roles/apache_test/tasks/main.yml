@@ -1,0 +1,28 @@
+---
+# tasks file for apache_test
+
+- name: Install Apache httpd
+  yum:
+    name: "{{ packages }}"
+    state: latest
+
+- name: Start and Enable services
+  systemd:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+    daemon_reload: yes
+  loop: "{{ services }}"
+
+- name: Include httpd customization tasks
+  include_tasks: custom_httpd.yml
+
+- name: Allow http port
+  firewalld:
+    port: "{{ports.http}}/tcp"
+    permanent: yes
+    immediate: yes
+    state: enabled
+
+- name: Include web content tasks
+  include_tasks: add_htmls.yml

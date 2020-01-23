@@ -1,0 +1,6 @@
+# Add AWS EC2 instances here
+[all:vars]
+ansible_user = ec2-user
+
+# Public IP/Hostname of EC2 instances
+[ec2]

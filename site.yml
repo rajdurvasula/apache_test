@@ -1,0 +1,13 @@
+---
+#
+# Test apache_test role
+#
+
+- name: Test apache_test role
+  hosts: all
+  become: true
+  become_method: sudo
+  
+  roles:
+    - { role: apache_test, }
+

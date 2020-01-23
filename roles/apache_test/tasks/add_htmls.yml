@@ -1,0 +1,31 @@
+---
+#
+# Task to add html files
+#
+- name: Check default index html file exists
+  stat:
+    path: /var/www/html/index.html
+  register: default_index_file
+
+- name: Backup default index html file
+  block:
+    - name: Create backup of default index html
+      copy:
+        src: /var/www/html/index.html
+        dest: /var/www/html/index.html.backup
+        remote_src: yes
+    - name: Delete default index html file
+      file:
+        path: /var/www/html/index.html
+        state: absent
+  when:
+    - default_index_file.stat.exists
+
+- name: Copy custom index html
+  template:
+    src: index.motd.j2
+    dest: /var/www/html/index.html
+    owner: root
+    group: root
+  notify:
+    - restart_webserver

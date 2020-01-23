@@ -1,0 +1,7 @@
+---
+# handlers file for apache_test
+
+- name: restart_webserver
+  systemd:
+    name: 'httpd'
+    state: restarted

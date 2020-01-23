@@ -1,0 +1,14 @@
+---
+# vars file for apache_test
+
+packages:
+  - 'httpd'
+  - 'firewalld'
+
+services:
+  - 'httpd'
+  - 'firewalld'
+
+ports:
+  http: 8080
+ 
