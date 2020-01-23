@@ -5,6 +5,8 @@
   yum:
     name: "{{ packages }}"
     state: latest
+  tags:
+    - setup_httpd
 
 - name: Start and Enable services
   systemd:
@@ -13,9 +15,13 @@
     enabled: yes
     daemon_reload: yes
   loop: "{{ services }}"
+  tags:
+    - setup_httpd
 
 - name: Include httpd customization tasks
   include_tasks: custom_httpd.yml
+  tags:
+    - setup_httpd
 
 - name: Allow http port
   firewalld:
@@ -23,6 +29,16 @@
     permanent: yes
     immediate: yes
     state: enabled
+  tags:
+    - setup_httpd
 
 - name: Include web content tasks
   include_tasks: add_htmls.yml
+  tags:
+    - setup_httpd
+
+- name: Include Test HTTPD tasks
+  include_tasks: test_httpd.yml
+  tags:
+    - test_httpd
+

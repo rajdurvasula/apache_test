@@ -1,0 +1,21 @@
+---
+#
+# Tasks to test httpd service
+#
+- name: Do HTTP GET
+  uri:
+    url: "http://{{ inventory_hostname}}:{{ports.http}}"
+    method: get
+    return_content: yes
+  register: _result
+  tags:
+    - test_httpd
+
+- name: Verify HTTP response code
+  debug:
+    msg: "HTTP GET on Index Page Successful"
+  when:
+    _result.status == 200
+  tags:
+    - test_httpd
+

@@ -11,3 +11,5 @@
     backup: yes
   notify:
     - restart_webserver 
+  tags:
+    - setup_httpd

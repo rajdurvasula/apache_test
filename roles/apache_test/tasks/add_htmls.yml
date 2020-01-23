@@ -6,6 +6,8 @@
   stat:
     path: /var/www/html/index.html
   register: default_index_file
+  tags:
+    - setup_httpd
 
 - name: Backup default index html file
   block:
@@ -20,6 +22,8 @@
         state: absent
   when:
     - default_index_file.stat.exists
+  tags:
+    - setup_httpd
 
 - name: Copy custom index html
   template:
@@ -29,3 +33,5 @@
     group: root
   notify:
     - restart_webserver
+  tags:
+    - setup_httpd
